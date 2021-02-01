@@ -1,0 +1,7 @@
+$("#mynewbook").modal('hide');
+$(".book_name").val('');
+$(".book_description").val('');
+$(".book_taggings").val('');
+
+
+$("#container_books").prepend('<%= j render @book %>');

@@ -1,0 +1,68 @@
+<div class="col-md-4 blog-main box text" id="book_<%= book.id %>" >
+      
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-name"><%= book.name %></h3>
+          <h6 class="panel-description"><%= book.description %></h6>
+          <h6 class="panel-tag_name"><b><%= book.taggings.map(&:tag_name).join(", ") %></b></h6>
+        </div>
+
+
+        <div class="panel-body">
+          <br>
+
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myupdatebook_<%= book.id %>">
+            Edit
+            </button>
+            <%= link_to 'Destroy', book, method: :delete, remote: true, data: { confirm: 'Are you sure?'} %>
+          </div>
+        </div>
+      
+      </div>
+
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<%= form_for(book, :method => :put, remote: true) do |form| %>
+
+  <div class="modal fade" id="myupdatebook_<%= book.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">Edit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+         <div class="field">
+          <%= form.label :name %><br>
+          <%= form.text_field :name, class: "form-control book_name"%>
+         </div>
+
+         <div class="field">
+          <%= form.label :description %><br>
+          <%= form.text_field :description, class: "form-control book_description" %>
+         </div>
+
+         <div class="field">
+          <%= form.fields_for :taggings do |f| %>
+          <%= render 'tagging_fields', f:f %>
+          <% end %>
+          <%=link_to_add_fields 'Add Tag', form, :taggings%>
+         </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="myupdatebutton_<% book.id %>" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= submit_tag "Update", class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+  </div>
+<% end %>
+
+</div>

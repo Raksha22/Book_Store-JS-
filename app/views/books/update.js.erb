@@ -1,0 +1,3 @@
+$("#myupdatebook_<%= @book.id %>").modal('hide');
+$("#book_<%= @book.id %>").replaceWith('<%= j render @book %>');
+

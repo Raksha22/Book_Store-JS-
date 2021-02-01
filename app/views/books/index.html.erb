@@ -1,0 +1,88 @@
+<div class="container" id="mysearchbook" >
+      
+      <div class="row">
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mynewbook">
+            New Book
+            </button>
+          
+        </div>
+      </div>
+      <br>
+      <hr>
+
+      <div id="container_books">
+         <%= render @books %>
+      </div>
+
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<%= form_for(@book, remote: true) do |form| %>
+
+  <div class="modal fade" id="mynewbook" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+         <div class="field">
+          <%= form.label :name %><br>
+          <%= form.text_field :name, class: "form-control book_name"%>
+         </div>
+
+         <div class="field">
+          <%= form.label :description %><br>
+          <%= form.text_field :description, class: "form-control book_description" %>
+         </div>
+
+         <div class="field">
+          <%= form.fields_for :taggings do |f| %>
+          <%= render 'tagging_fields', f:f %>
+          <% end %>
+          <%=link_to_add_fields 'Add Tag', form, :taggings%>
+         </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= submit_tag "Create", class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+  </div>
+<% end %>
+
+</div>
+
+<div id="search-results">
+
+</div>
+<script >
+  
+  // $('form').on('click', '.remove_fields', function(event){
+  //   $(this).prev('input[type=hidden]').val('1');
+  //   $(this).closest('fieldset').hide();
+  //   console.log('removed')
+
+  //   return event.preventDefault();
+  // });
+
+
+  $('form').on('click', '.add_fields', function(event){
+    console.log('clicked')
+    var regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'), 'g');
+    $(this).before($(this).data('fields').replace(regexp, time));
+    return event.preventDefault();
+  });
+
+
+</script>
