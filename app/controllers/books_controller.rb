@@ -32,6 +32,7 @@ class BooksController < ApplicationController
   end
 
   def create
+    # @book = Book.create(book_params)
     @book = Book.create(book_params)
 
     respond_to do |format|
